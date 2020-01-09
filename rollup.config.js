@@ -4,7 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import * as fs from 'fs';
-import fetch from 'unfetch';
+import fetch from 'node-fetch'
 
 const production = !process.env.ROLLUP_WATCH;
 const buildDest = 'public'
@@ -76,7 +76,7 @@ function serve() {
 
 async function buildRoutes() {
 	try {
-		console.log('===Bleep bloop, I\'m building Routes===')
+		console.log('=== Bleep bloop, I\'m building Routes ===')
 
 		const url = `https://api.netlify.com/api/v1/forms/${process.env.ROUTES_FORM_ID}/submissions/?access_token=${process.env.API_AUTH}`
 
@@ -84,11 +84,10 @@ async function buildRoutes() {
 		const body = await response.json()
 
 		let routes = []
-		const formData = JSON.parse(body)
 
-		for (const route in formData) {
-			let destination = formData[route].data.destination
-			const code = formData[route].data.code
+		for (const route in body) {
+			let destination = body[route].data.destination
+			const code = body[route].data.code
 
 			if (destination.indexOf('://') == -1) {
 				destination = `http://${destination}`
