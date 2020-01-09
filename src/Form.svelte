@@ -7,7 +7,7 @@
   async function onSubmit() {
     try {
       const response = await fetch('/.netlify/functions/generate-route?to=' + $destination)
-      const data = await response.text()
+      const data = await response.json()
       dispatch('response', data)
     } catch (error) {
       console.log(error)
