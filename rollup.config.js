@@ -76,7 +76,7 @@ function serve() {
 
 async function buildRoutes() {
 	try {
-		console.log('Bleep bloop, I\'m building routes')
+		console.log('===Bleep bloop, I\'m building Routes===')
 
 		const url = `https://api.netlify.com/api/v1/forms/${process.env.ROUTES_FORM_ID}//submissions/?access_token=${process.env.API_AUTH}`
 

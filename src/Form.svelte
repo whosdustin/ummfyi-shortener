@@ -5,9 +5,14 @@
   const destination = writable('')
   
   const onSubmit = async () => {
-    const response = await fetch(`/.netlify/functions/generate-route?to=${$destination}`)
-    const json = await response.json()
-    dispatch('response', json)
+    try {
+      const response = await fetch(`/.netlify/functions/generate-route?to=${$destination}`)
+      const data = await response.json();
+      dispatch('response', data)
+    } catch (error) {
+      console.log(error)
+    }
+    
   }
 </script>
 
