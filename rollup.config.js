@@ -2,6 +2,7 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
+import * as fs from 'fs'
 import { terser } from 'rollup-plugin-terser';
 
 const production = !process.env.ROLLUP_WATCH;
@@ -71,6 +72,37 @@ function serve() {
 	};
 }
 
-function buildRoutes() {
-	console.log('Bleep bloop, I\'m building routes')
+async function buildRoutes() {
+	try {
+		console.log('Bleep bloop, I\'m building routes')
+
+		const url = `https://api.netlify.com/api/v1/forms/${process.env.ROUTES_FORM_ID}//submissions/?access_token=${process.env.API_AUTH}`
+
+		const response = await fetch(url)
+		const body = await response.json()
+
+		let routes = []
+		const formData = JSON.parse(body)
+
+		for (const route in formData) {
+			let destination = formData[route].data.destination
+			const code = formData[route].data.code
+
+			if (destination.indexOf('://') == -1) {
+				destination = `http://${destination}`
+			}
+
+			routes = [...routes, `/${code} ${destination} 302`]
+		}
+
+		fs.writeFile(`${buildDest}/_redirects`, routes.join('\n'), (error) => {
+			if (error) {
+				return console.log(error)
+			} else {
+				return console.log('Routes data save.')
+			}
+		})
+	} catch (error) {
+		console.log(`Something went wrong: ${error}`)
+	}
 }
