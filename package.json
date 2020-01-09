@@ -20,6 +20,7 @@
     "hashids": "^2.1.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
-    "sirv-cli": "^0.4.4"
+    "sirv-cli": "^0.4.4",
+    "unfetch": "^4.1.0"
   }
 }

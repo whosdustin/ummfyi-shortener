@@ -2,8 +2,9 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
-import * as fs from 'fs'
 import { terser } from 'rollup-plugin-terser';
+import * as fs from 'fs';
+import fetch from 'unfetch';
 
 const production = !process.env.ROLLUP_WATCH;
 const buildDest = 'public'
