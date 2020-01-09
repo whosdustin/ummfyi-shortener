@@ -6,6 +6,7 @@ import * as fs from 'fs'
 import { terser } from 'rollup-plugin-terser';
 
 const production = !process.env.ROLLUP_WATCH;
+const buildDest = 'public'
 
 export default {
 	input: 'src/main.js',
