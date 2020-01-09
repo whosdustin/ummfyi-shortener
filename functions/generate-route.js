@@ -29,11 +29,11 @@ exports.handler = async (event, context) => {
     }
 
     const response = await request(options)
-    const body = await response
+    // const body = await response
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ url: rootURL + code })
+      body: JSON.stringify({ url: `${rootURL}${code}` })
     }
   } catch (error) {
     console.log(error)

@@ -1,10 +1,7 @@
 import App from './App.svelte';
-
+// const target = document.getElementById('#app')
 const app = new App({
-	target: document.body,
-	props: {
-		name: 'world'
-	}
+	target: document.getElementById('app')
 });
 
 export default app;
