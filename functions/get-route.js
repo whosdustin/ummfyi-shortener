@@ -4,7 +4,7 @@ exports.handler = async (event, context) => {
   try {
     const code = event.queryStringParameters.code
 
-    const url = `https://api.netlify.com/api/v1/forms/${process.env.ROUTES_FORM_ID}//submissions/?access_token=${process.env.API_AUTH}`
+    const url = `https://api.netlify.com/api/v1/forms/${process.env.ROUTES_FORM_ID}/submissions/?access_token=${process.env.API_AUTH}`
 
     const options = {
       uri: url,

@@ -28,14 +28,12 @@ exports.handler = async (event, context) => {
       form: payload
     }
 
-    const response = await request(options)
-    const body = {
-      url: rootURL + code
-    }
+    await request(options)
+    await request() 
 
     return {
       statusCode: 200,
-      body: JSON.stringify(body)
+      body: JSON.stringify({ url: rootURL + code })
     }
   } catch (error) {
     return {
