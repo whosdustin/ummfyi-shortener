@@ -1,18 +1,17 @@
 <script>
-  import { createEventDispatcher } from 'svelte'
-  import { writable } from 'svelte/store'
-  const dispatch = createEventDispatcher()
-  const destination = writable('')
+  import { createEventDispatcher } from 'svelte';
+  import { writable } from 'svelte/store';
+  const dispatch = createEventDispatcher();
+  const destination = writable('');
   
-  const onSubmit = async () => {
+  async function onSubmit() {
     try {
-      const response = await fetch(`/.netlify/functions/generate-route?to=${$destination}`)
-      const data = await response.json();
+      const response = await fetch('/.netlify/functions/generate-route?to=' + $destination)
+      const data = await response.text()
       dispatch('response', data)
     } catch (error) {
       console.log(error)
     }
-    
   }
 </script>
 
