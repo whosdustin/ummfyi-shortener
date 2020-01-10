@@ -1,13 +1,12 @@
 const request = require('request-promise-native')
+const { FORM_API } = require('./utils/config')
 
 exports.handler = async (event, context) => {
   try {
     const code = event.queryStringParameters.code
 
-    const url = `https://api.netlify.com/api/v1/forms/${process.env.ROUTES_FORM_ID}/submissions/?access_token=${process.env.API_AUTH}`
-
     const options = {
-      uri: url,
+      uri: FORM_API,
       json: true
     }
 
