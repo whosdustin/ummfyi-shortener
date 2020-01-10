@@ -29,7 +29,7 @@ exports.handler = async (event, context) => {
     }
 
     await request(options)
-    await request() 
+    await request('/.netlify/functions/build-hook') 
 
     return {
       statusCode: 200,
