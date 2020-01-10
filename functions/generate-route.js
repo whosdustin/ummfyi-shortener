@@ -29,7 +29,7 @@ exports.handler = async (event, context) => {
     }
 
     await request(options)
-    await request('/.netlify/functions/build-hook') 
+    await request(`${rootURL}.netlify/functions/build-hook`) 
 
     return {
       statusCode: 200,
@@ -38,10 +38,7 @@ exports.handler = async (event, context) => {
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ 
-        msg: error,
-        options: options
-      })
+      body: JSON.stringify({ msg: error })
     }
   }
 }

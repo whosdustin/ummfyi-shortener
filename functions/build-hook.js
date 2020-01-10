@@ -5,7 +5,7 @@ exports.handler = async (event, context) => {
     await request({
       method: 'POST',
       uri: `https://api.netlify.com/build_hooks/${process.env.BUILD_HOOKS_ID}`,
-      
+      body: {}
     })
     return {
       statusCode: 200
