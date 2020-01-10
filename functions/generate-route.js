@@ -22,14 +22,19 @@ exports.handler = async (event, context) => {
       expires: ''
     }
 
-    const options = {
+    const formPost = {
       method: 'POST',
       uri: rootURL,
       form: payload
     }
+    
+    const hookPost = {
+      method: 'POST',
+      uri: `${rootURL}/.netlify/functions/build-hook`
+    }
 
-    await request(options)
-    await request(`${rootURL}.netlify/functions/build-hook`) 
+    await request(formPost)
+    await request(hookPost) 
 
     return {
       statusCode: 200,
