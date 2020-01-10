@@ -1,0 +1,22 @@
+<script>
+  export let type = '';
+  let list = Array.from('iiiii');
+</script>
+
+{#if type === 'table'}
+  {#each list as item}
+    <tr>
+      <td><div class="block"></div></td>
+      <td><div class="block"></div></td>
+    </tr>
+  {/each}
+{/if}
+
+<style>
+.block {
+  width: 300px;
+  height: 1em;
+  padding: 0.3em;
+  background: #eee;
+}
+</style>

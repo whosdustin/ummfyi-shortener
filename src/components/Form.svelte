@@ -15,14 +15,18 @@
   }
 </script>
 
-<form name="make-url">
+<form>
   <div class="field">
     <label class="label" for="destination">URL</label>
     <input class="input is-large" type="text" bind:value={$destination} />
   </div>
   <div class="field">
-    <div class="control">
-      <button on:click|preventDefault={onSubmit} class="button is-large">Shorten</button>
+    <div class="control has-text-centered">
+      <button 
+        on:click={onSubmit}
+        class="button is-primary is-outlined is-rounded is-large">
+        Shorten URL
+      </button>
     </div>
   </div>
 </form>
