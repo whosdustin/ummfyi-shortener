@@ -1,12 +1,18 @@
 <script>
 	import { onMount } from 'svelte'
-	import Form from './Form.svelte'
-	import RouteRow from './RouteRow.svelte'
+	import netlifyIdentity from 'netlify-identity-widget'
+	import Form from './components/Form.svelte'
+	import RouteRow from './components/RouteRow.svelte'
 
 	let shortenUrl = ''
 	let routes = []
 
-	onMount(() => getRoutes())
+	onMount(() => {
+		netlifyIdentity.init()
+		getRoutes()
+	})
+
+	const openLogin = () => netlifyIdentity.open();
 
 	function formCallback(event) {
 		shortenUrl = event.detail.url
@@ -27,6 +33,7 @@
 
 <main class="container">
 	<div class="section">
+		<button on:click="{openLogin}">Login</button>
 		<div class="columns">
 			<div class="column">
 				<Form on:response={formCallback}/>

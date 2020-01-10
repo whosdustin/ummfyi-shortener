@@ -19,6 +19,7 @@
   "dependencies": {
     "clipboard-copy": "^3.1.0",
     "hashids": "^2.1.0",
+    "netlify-identity-widget": "^1.5.6",
     "node-fetch": "^2.6.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
