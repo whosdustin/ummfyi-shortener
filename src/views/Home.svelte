@@ -1,6 +1,10 @@
 <script>
   import Layout from '../layout/Default.svelte'
   import Button from '../components/Button.svelte'
+  import Invite from '../components/Invite.svelte'
+  import { openInvite } from '../store'
+
+  const toggleInvite = () => openInvite.update(open => open = !open)
 </script>
 
 <Layout>
@@ -9,8 +13,10 @@
       <div class="container has-text-centered">
         <h1 class="title is-size-1">A Conceited URL Shortener</h1>
         <h2 class="subtitle">Built to inform people what you already know.</h2>
-        <Button color="success">Request Invite</Button>
+        <Button color="success" on:click={toggleInvite}>Request Invite</Button>
       </div>
     </div>
   </section>
 </Layout>
+
+<Invite />
