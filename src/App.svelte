@@ -9,6 +9,5 @@
 </script>
 
 <Nav />
-<div class="container">
-	<Router {routes} on:conditionsFailed={() => push('/')} />
-</div>
+<Router {routes} on:conditionsFailed={() => push('/')} />
+

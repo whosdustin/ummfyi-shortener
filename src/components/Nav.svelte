@@ -1,7 +1,7 @@
 <script>
   import { link } from 'svelte-spa-router'
 </script>
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
   <div class="navbar-menu">
     <div class="navbar-end">
       <a class="navbar-item" href="/" use:link>Home</a>

@@ -10,7 +10,7 @@
 	}
 </script>
 
-<Layout>
+<Layout title="Shorten">
   <section class="section">
     <div class="columns">
       <div class="column is-8 is-offset-2">
