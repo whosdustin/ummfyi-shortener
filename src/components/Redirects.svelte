@@ -4,14 +4,20 @@
   import Await from '../components/Await.svelte'
 
   let redirects = [];
-
-  onMount(() => getRedirects())
+  let promise = getRedirects()
   
-  async function getRedirects() {	
-		const response = await fetch('/.netlify/functions/routes')
-		const body = await response.json()
+  onMount(() => promise)
+  
+  async function getRedirects() {
+    try {
+      const response = await fetch('/.netlify/functions/routes')
+      const body = await response.json()
 
-		redirects = [...body]
+      redirects = [...body]
+    } catch (error) {
+      console.log(error)
+    }	
+		
   }
 
 	function buildRedirects(code) {
@@ -20,26 +26,26 @@
 </script>
 
 <table class="table is-fullwidth is-striped">
-  {#await getRedirects}
+  <thead>
+    <tr>
+      <th>Destination</th>
+      <th>Short Url</th>
+    </tr>
+  </thead>
+  {#await promise}
     <Await type='table' />
   {:then}
-    <thead>
-      <tr>
-        <th>Destination</th>
-        <th>Short Url</th>
-      </tr>
-    </thead>
     {#each redirects as route}
       <RedirectRow 
         code={route.data.code} 
         destination={route.data.destination}
       />
     {/each}
-    <tfoot>
-      <tr>
-        <th>Destination</th>
-        <th>Short Url</th>
-      </tr>
-    </tfoot>
   {/await}
+  <tfoot>
+    <tr>
+      <th>Destination</th>
+      <th>Short Url</th>
+    </tr>
+  </tfoot>
 </table>

@@ -1,12 +1,41 @@
 <script>
-  import { link } from 'svelte-spa-router'
+  import { link, push } from 'svelte-spa-router'
+  import netlifyIdentity from 'netlify-identity-widget'
+  import { user } from '../store'
+  import { auth } from '../utils/auth'
+
+  import Button from './Button.svelte'
+
+  let authButton = auth.currentUser() ? 'Log out' : 'Log in'
+
+  function handleLogin() {
+    netlifyIdentity.open()
+
+    netlifyIdentity.on('login', u => {
+      user.set(u)
+      authButton = 'Log out'
+      netlifyIdentity.close()
+      push('/shortener')
+    })
+
+    netlifyIdentity.on('logout', u => {
+      netlifyIdentity.close()
+      location.reload()
+    })
+  }
 </script>
+
 <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
   <div class="navbar-menu">
     <div class="navbar-end">
       <a class="navbar-item" href="/" use:link>Home</a>
       <a class="navbar-item" href="/shortener" use:link>Shortener</a>
-      <div data-netlify-identity-menu></div>
+      {#if $user}
+        <div class="navbar-item">{$user.email}</div>
+      {/if}
+      <div class="navbar-item buttons">
+        <Button color="default" on:click={handleLogin}>{authButton}</Button>
+      </div>
     </div>
   </div>
 </nav>

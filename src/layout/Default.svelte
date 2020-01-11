@@ -1,5 +1,4 @@
 <script>
-  import { fade } from 'svelte/transition'
   export let title = 'Home';
 
   $: fullTitle = `Umm Fyi - URL Shortener | ${title}`
@@ -9,6 +8,6 @@
   <title>{fullTitle}</title>
 </svelte:head>
 
-<main in:fade={{ duration: 500 }}>
+<main>
   <slot />
 </main>

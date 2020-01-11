@@ -1,5 +1,6 @@
 <script>
   import Layout from '../layout/Default.svelte'
+  import Button from '../components/Button.svelte'
 </script>
 
 <Layout>
@@ -8,7 +9,7 @@
       <div class="container has-text-centered">
         <h1 class="title is-size-1">A Conceited URL Shortener</h1>
         <h2 class="subtitle">Built to inform people what you already know.</h2>
-        <button class="button is-rounded is-success">Request Invite</button>
+        <Button color="success">Request Invite</Button>
       </div>
     </div>
   </section>
