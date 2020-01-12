@@ -12,9 +12,7 @@
     try {
       const response = await fetch('/.netlify/functions/summit-invite?email=' + email)
       const data = await response.json()
-      if (data.ok) {
-        toggleOpen()
-      }
+      if (data.ok) { toggleOpen() }
     } catch (error) {
       console.log(error)
     }
@@ -26,10 +24,14 @@
   
   <div class="modal-card" in:slide={{ duration: 500 }} out:fade>
     <section class="modal-card-body">
+      <div class="field has-text-centered">
+        <h2 class="is-size-2">Request an invite.</h2>
+        <p>Toss your email and in the form and wait patiently.</p>
+      </div>
       <form>
         <div class="field">
           <label for="email" class="label">Email</label>
-          <input type="email" class="input" bind:value={email}>
+          <input type="email" placeholder="joandoe@example.com" class="input" bind:value={email}>
         </div>
         <div class="has-text-centered">
           <Button on:click={onSubmit}>Send Request</Button>

@@ -72,13 +72,13 @@ textarea {
 	color: var(--primary);
 }
 
-.button.is-primary.is-outlined {
+.button.is-primary {
 	border-color: var(--primary);
-	color: var(--primary);
+	background-color: var(--primary);
 }
 
-.button.is-primary.is-outlined:hover,
-.button.is-primary.is-outlined:focus {
+.button.is-primary:hover,
+.button.is-primary:focus {
 	border-color: var(--primary);
 	background-color: var(--primary);
 }
