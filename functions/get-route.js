@@ -30,10 +30,9 @@ exports.handler = async (event, context) => {
       }
     }
   } catch (error) { 
-    console.log(error) 
     return {
       statusCode: 200,
-      body: error
+      body: JSON.stringify({ ok: false, msg: error })
     }
   }
 }

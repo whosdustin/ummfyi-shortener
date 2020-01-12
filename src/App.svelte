@@ -18,6 +18,21 @@
 			user.set()
 		}
 	}
+
+	async function redirectIfRequired() {
+		try {
+			const path = window.location.pathname
+			if (path !== '/') {
+				const response = await fetch('/.netlify/functions/get-route?code='+path.replace("/",""))
+				const data = response.json()
+				document.location.href = data.url
+			}
+		} catch (error) {
+			console.log(error)
+			document.location.pathname = '/'
+		}
+	}
+	redirectIfRequired()
 </script>
 
 <Nav />
