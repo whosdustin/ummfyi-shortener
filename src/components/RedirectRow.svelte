@@ -4,10 +4,6 @@
   export let code;
 
   $: url = `https://umm.fyi/${code}`
-
-  function copyToClipboard() {
-    copy(url)
-  }
 </script>
 
 <tr>
@@ -15,7 +11,7 @@
   <td>
     <a href={url}>{url}</a>
     <button 
-      on:click={copyToClipboard} 
+      on:click={() => copy(url)} 
       class="button is-small is-pulled-right">
       <span class="icon">
         <i class="far fa-copy"></i>

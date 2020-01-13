@@ -1,30 +1,37 @@
-const request = require('request-promise-native')
+const faunadb = require('faunadb')
+
+const q = faunadb.query
+const client = new faunadb.Client({
+  secret: process.env.FAUNA_SERVER_SECRET
+})
 
 exports.handler = async (event, context) => {
   try {
-    const rootURL = process.env.URL + '/'
-    let email = event.queryStringParameters.email
+    let data = JSON.parse(event.body)
+    console.log('Function submit-invite invoked', data)
 
-    const formPost = {
-      method: 'POST',
-      uri: rootURL,
-      form: {
-        'form-name': 'invites',
-        email
-      }
+    const emailInvite = {
+      data: data
     }
 
-    await request(formPost)
+    await client.query(
+      q.Create(q.Collection('invites'), emailInvite)
+    )
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ ok: true, msg: 'Form submitted' })
+      body: JSON.stringify({ 
+        ok: true,
+        msg: `Invite submitted for ${data.email}`
+      })
     }
-
   } catch (error) {
     return {
-      statusCode: 500,
-      body: JSON.stringify({ msg: error })
+      statusCode: 400,
+      body: JSON.stringify({ 
+        ok: false,
+        error: error
+      })
     }
   }
 }

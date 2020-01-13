@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { writable, get } from 'svelte/store';
+  import Button from './Button.svelte'
   import { user } from '../store'
   import api from '../utils/api'
   const dispatch = createEventDispatcher();
@@ -31,11 +32,7 @@
   </div>
   <div class="field">
     <div class="control has-text-centered">
-      <button 
-        on:click={onSubmit}
-        class="button is-primary is-outlined is-rounded is-large">
-        Shorten URL
-      </button>
+      <Button size="large" on:click={onSubmit}>Shorten URL</Button>
     </div>
   </div>
 </form>

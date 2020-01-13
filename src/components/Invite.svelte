@@ -2,19 +2,19 @@
   import { slide, fade } from 'svelte/transition'
   import { writable } from 'svelte/store'
   import { openInvite } from '../store'
+  import api from '../utils/api'
   import Button from '../components/Button.svelte'
 
   let email;
   
-  const toggleOpen = () => openInvite.update(open => open = !open)
+  const toggleOpen = () => openInvite.update(open => open = !open);
 
   async function onSubmit() {
     try {
-      const response = await fetch('/.netlify/functions/summit-invite?email=' + email)
-      const data = await response.json()
-      if (data.ok) { toggleOpen() }
+      await api.invite({ email });
+      toggleOpen()
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 </script>

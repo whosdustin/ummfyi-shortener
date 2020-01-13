@@ -8,21 +8,17 @@
 
   let authButton = auth.currentUser() ? 'Log out' : 'Log in'
 
-  function handleLogin() {
-    netlifyIdentity.open()
+  netlifyIdentity.on('login', u => {
+    user.set(u)
+    authButton = 'Log out'
+    netlifyIdentity.close()
+    push('/shortener')
+  });
 
-    netlifyIdentity.on('login', u => {
-      user.set(u)
-      authButton = 'Log out'
-      netlifyIdentity.close()
-      push('/shortener')
-    })
-
-    netlifyIdentity.on('logout', u => {
-      netlifyIdentity.close()
-      location.reload()
-    })
-  }
+  netlifyIdentity.on('logout', u => {
+    netlifyIdentity.close()
+    location.reload()
+  });
 </script>
 
 <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
@@ -34,7 +30,7 @@
         <div class="navbar-item">{$user.email}</div>
       {/if}
       <div class="navbar-item buttons">
-        <Button color="default" on:click={handleLogin}>{authButton}</Button>
+        <Button color="default" on:click={() => netlifyIdentity.open()}>{authButton}</Button>
       </div>
     </div>
   </div>
