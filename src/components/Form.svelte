@@ -1,14 +1,23 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { writable } from 'svelte/store';
+  import { writable, get } from 'svelte/store';
+  import { user } from '../store'
+  import api from '../utils/api'
   const dispatch = createEventDispatcher();
-  const destination = writable('');
-  
+
+  let destination;
+
   async function onSubmit() {
     try {
-      const response = await fetch('/.netlify/functions/generate-route?to=' + $destination)
-      const data = await response.json()
-      dispatch('response', data)
+      const redirect = {
+        user: {
+          id: $user.id,
+          email: $user.email
+        },
+        destination
+      }
+      const response = await api.create(redirect)
+      dispatch('response', response)
     } catch (error) {
       console.log(error)
     }
@@ -18,7 +27,7 @@
 <form>
   <div class="field">
     <label class="label" for="destination">URL</label>
-    <input class="input is-large" type="text" bind:value={$destination} />
+    <input class="input is-large" type="text" bind:value={destination} />
   </div>
   <div class="field">
     <div class="control has-text-centered">

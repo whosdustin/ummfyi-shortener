@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "clipboard-copy": "^3.1.0",
+    "faunadb": "^2.10.2",
     "gotrue-js": "^0.9.25",
     "hashids": "^2.1.0",
     "netlify-identity-widget": "^1.5.6",
