@@ -11,8 +11,11 @@
 
   async function onSubmit() {
     try {
-      await api.invite({ email });
-      toggleOpen()
+      const response = await api.invite({ email: email });
+
+      if (response.ok) {
+        toggleOpen()
+      }
     } catch (error) {
       console.log(error);
     }

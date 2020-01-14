@@ -1,4 +1,5 @@
 const faunadb = require('faunadb')
+const fetch = require('node-fetch')
 const Hashids = require('hashids/cjs')
 
 const q = faunadb.query
@@ -27,6 +28,12 @@ exports.handler = async (event, context) => {
     await client.query(
       q.Create(q.Collection('redirects'), { data: data })
     )
+
+    // Fire a new build after submitting new redirect
+    await fetch(`https://api.netlify.com/build_hooks/${process.env.BUILD_HOOKS_ID}`, {
+      method: 'POST',
+      body: {}
+    })
 
     return {
       statusCode: 200,

@@ -22,12 +22,12 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       body: JSON.stringify({ 
         ok: true,
-        msg: `Invite submitted for ${data.email}`
+        msg: `Invite submitted ${data.email}`
       })
     }
   } catch (error) {
     return {
-      statusCode: 400,
+      statusCode: 500,
       body: JSON.stringify({ 
         ok: false,
         error: error

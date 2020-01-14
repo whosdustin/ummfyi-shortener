@@ -1,23 +1,22 @@
 <script>
-  import { onMount } from 'svelte'
+  import { onMount, tick } from 'svelte'
+  import { user } from '../store'
+  import api from '../utils/api'
   import RedirectRow from '../components/RedirectRow.svelte'
   import Await from '../components/Await.svelte'
 
   let redirects = [];
   let promise = getRedirects()
   
-  onMount(() => promise)
-  
   async function getRedirects() {
     try {
-      const response = await fetch('/.netlify/functions/routes')
-      const body = await response.json()
+      await tick()
+      const response = await api.readRedirects($user.id)
 
-      redirects = [...body]
+      redirects = response.redirects
     } catch (error) {
       console.log(error)
-    }	
-		
+    }
   }
 
 	function buildRedirects(code) {

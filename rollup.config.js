@@ -76,8 +76,10 @@ function serve() {
 
 async function buildRoutes() {
 	try {
+
 		console.log('=== Bleep bloop, I\'m building Routes ===')
 
+		await api.readAll()
 		const url = `https://api.netlify.com/api/v1/forms/${process.env.ROUTES_FORM_ID}/submissions/?access_token=${process.env.API_AUTH}`
 
 		const response = await fetch(url)
@@ -88,10 +90,6 @@ async function buildRoutes() {
 		for (const route in body) {
 			let destination = body[route].data.destination
 			const code = body[route].data.code
-
-			if (destination.indexOf('://') == -1) {
-				destination = `http://${destination}`
-			}
 
 			routes = [...routes, `/${code} ${destination} 302`]
 		}

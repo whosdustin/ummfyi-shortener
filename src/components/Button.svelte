@@ -4,6 +4,6 @@
   $: classList = `button is-rounded is-uppercase is-${color} is-${size}`;
 </script>
 
-<button class="{classList}" on:click>
+<button class="{classList}" on:click|preventDefault>
   <slot />
 </button>
