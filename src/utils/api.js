@@ -1,6 +1,6 @@
 import fetch from "node-fetch"
 
-const netlify = '/.netlify/functions/'
+const netlify = `/.netlify/functions/`
 // Api methods to call functions
 const create = async (data) => {
   try {
@@ -38,6 +38,16 @@ const find = async (code) => {
   }
 }
 
+const readAll = async (production) => {
+  try {
+    // Need full URL for Rollup build
+    const URL = !production ? 'http://localhost:34567' : process.env.URL
+    const response = await fetch(`${URL}${netlify}redirects-read-all`)
+    return response.json()
+  } catch (error) {
+    console.log(error)
+  }
+}
 const invite = async (data) => {
   try {
     const response = await fetch(`${netlify}submit-invite`, {
@@ -53,6 +63,7 @@ const invite = async (data) => {
 export default {
   create: create,
   find: find,
+  readAll: readAll,
   readRedirects: readRedirects,
   invite: invite
 }

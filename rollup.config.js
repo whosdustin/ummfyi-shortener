@@ -4,7 +4,6 @@ import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import * as fs from 'fs';
-import fetch from 'node-fetch'
 import api from './src/utils/api'
 
 const production = !process.env.ROLLUP_WATCH;
@@ -39,7 +38,7 @@ export default {
 			dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
 		}),
 		commonjs(),
-		buildRoutes(),
+		buildRedirects(),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
@@ -75,31 +74,24 @@ function serve() {
 	};
 }
 
-async function buildRoutes() {
+async function buildRedirects() {
 	try {
+		console.log('=== Bleep bloop, I\'m building Redirects ===')
 
-		console.log('=== Bleep bloop, I\'m building Routes ===')
-
-		// await api.readAll()
-		const url = `https://api.netlify.com/api/v1/forms/${process.env.ROUTES_FORM_ID}/submissions/?access_token=${process.env.API_AUTH}`
-
-		const response = await fetch(url)
-		const body = await response.json()
+		const response = await api.readAll(production)
 
 		let routes = []
 
-		for (const route in body) {
-			let destination = body[route].data.destination
-			const code = body[route].data.code
-
-			routes = [...routes, `/${code} ${destination} 302`]
-		}
+		response.forEach(redirect => {
+			const { destination, code } = redirect.data
+			routes = [...routes, `/${code} ${destination} 302` ]
+		})
 
 		fs.writeFile(`${buildDest}/_redirects`, routes.join('\n'), (error) => {
 			if (error) {
 				return console.log(error)
 			} else {
-				return console.log('Routes data save.')
+				return console.log('Redirects data saved.')
 			}
 		})
 	} catch (error) {
