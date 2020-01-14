@@ -2,12 +2,13 @@
   import Layout from '../layout/Default.svelte'
   import Form from '../components/Form.svelte'
   import Redirects from '../components/Redirects.svelte'
+  import api from '../utils/api'
 
-  let shortenUrl = '';
+  let shortenUrl;
 
   function formCallback(event) {
 		shortenUrl = event.detail.url
-	}
+  }
 </script>
 
 <Layout title="Shorten">

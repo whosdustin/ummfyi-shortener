@@ -26,6 +26,18 @@ const readRedirects = async (userid) => {
   }
 }
 
+const find = async (code) => {
+  try {
+    const response = await fetch(`${netlify}redirect-find`, {
+      method: 'POST',
+      body: JSON.stringify({ code: code })
+    })
+    return response.json()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const invite = async (data) => {
   try {
     const response = await fetch(`${netlify}submit-invite`, {
@@ -40,6 +52,7 @@ const invite = async (data) => {
 
 export default {
   create: create,
+  find: find,
   readRedirects: readRedirects,
   invite: invite
 }

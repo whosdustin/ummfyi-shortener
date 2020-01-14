@@ -5,6 +5,7 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import * as fs from 'fs';
 import fetch from 'node-fetch'
+import api from './src/utils/api'
 
 const production = !process.env.ROLLUP_WATCH;
 const buildDest = 'public'
@@ -79,7 +80,7 @@ async function buildRoutes() {
 
 		console.log('=== Bleep bloop, I\'m building Routes ===')
 
-		await api.readAll()
+		// await api.readAll()
 		const url = `https://api.netlify.com/api/v1/forms/${process.env.ROUTES_FORM_ID}/submissions/?access_token=${process.env.API_AUTH}`
 
 		const response = await fetch(url)

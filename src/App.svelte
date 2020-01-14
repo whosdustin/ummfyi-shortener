@@ -3,6 +3,7 @@
 	import netlifyIdentity from 'netlify-identity-widget'
 	import Router, { push } from 'svelte-spa-router'
 	import { user } from './store'
+	import api from './utils/api'
 	import { routes } from './routes'
 	import Nav from './components/Nav.svelte'
 	
@@ -23,9 +24,8 @@
 		try {
 			const path = window.location.pathname
 			if (path !== '/') {
-				const response = await fetch('/.netlify/functions/get-route?code='+path.replace("/",""))
-				const data = response.json()
-				document.location.href = data.url
+				const response = await api.find(path.replace('/', ''))
+				document.location.href = response.destination
 			}
 		} catch (error) {
 			console.log(error)
@@ -37,4 +37,3 @@
 
 <Nav />
 <Router {routes} on:conditionsFailed={() => push('/')} />
-
