@@ -1,4 +1,5 @@
 const faunadb = require('faunadb')
+const body = require('./utils/callbackBody')
 
 const q = faunadb.query
 const client = new faunadb.Client({
@@ -7,6 +8,7 @@ const client = new faunadb.Client({
 
 exports.handler = async (event, context) => {
   try {
+    let redirects
     console.log('Function `redirect-all` invoked')
 
     const response = await client.query(
@@ -23,16 +25,16 @@ exports.handler = async (event, context) => {
       )
     )
 
-    const redirects = response.data
+    redirects = response.data
     
     return {
       statusCode: 200,
-      body:JSON.stringify(redirects)
+      body: body('', redirects)
     }
   } catch (error) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ ok: false, error: error })
+      body: body('', null, error, false)
     }
   }
 }

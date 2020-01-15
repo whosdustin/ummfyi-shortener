@@ -16,12 +16,11 @@
       }
       const response = await api.create(redirect)
       redirects.add(response)
-      notifications.add(
-        `Successfully shortened: ${response.data.redirect}`, 'is-success'
-      )
+      notifications.add(response.message, 'is-success')
       destination = ''
     } catch (error) {
-      console.log(error)
+      console.error(error)
+      notifications.add('Oops, something went wrong')
     }
   }
 </script>

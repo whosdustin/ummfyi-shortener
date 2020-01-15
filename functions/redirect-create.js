@@ -1,6 +1,7 @@
 const faunadb = require('faunadb')
 const fetch = require('node-fetch')
 const Hashids = require('hashids/cjs')
+const body = require('./utils/callbackBody')
 
 const q = faunadb.query
 const client = new faunadb.Client({
@@ -11,22 +12,22 @@ const rootURL = process.env.URL + '/'
 
 exports.handler = async (event, context) => {
   try {
-    let data = JSON.parse(event.body)
-    console.log('Function redirect-create invoked', data)
+    let redirect = JSON.parse(event.body)
+    console.log('Function redirect-create invoked', redirect)
 
     const hash = new Hashids()
     const number = Math.round(new Date().getTime() / 100)
     const code = hash.encode(number)
-    const redirect = rootURL + code
+    const redirectURL = rootURL + code
 
-    if (data.destination.indexOf('://') == -1) {
-      data.destination = `http://${data.destination}`
+    if (redirect.destination.indexOf('://') == -1) {
+      redirect.destination = `http://${redirect.destination}`
     }
 
-    data = {...data, redirect, code }
+    redirect = {...redirect, redirect: redirectURL, code }
 
     await client.query(
-      q.Create(q.Collection('redirects'), { data: data })
+      q.Create(q.Collection('redirects'), { data: redirect })
     )
 
     // Fire a new build after submitting new redirect
@@ -37,7 +38,7 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ data: data })
+      body: body(`URL shrunk to ${redirectURL}`, redirect)
     }
   } catch (error) {
     console.log('error', error)

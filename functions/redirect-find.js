@@ -1,4 +1,5 @@
 const faunadb = require('faunadb')
+const body = require('./utils/callbackBody')
 
 const q = faunadb.query
 const client = new faunadb.Client({
@@ -28,17 +29,14 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        ok: true,
-        destination: redirect.destination
-      })
+      body: body('', {...redirect})
     }
 
   } catch (error) { 
     console.log('Found 0 Refs')
     return {
       statusCode: 400,
-      body: JSON.stringify({ ok: false, error: error })
+      body: body('', null, error, false)
     }
   }
 }

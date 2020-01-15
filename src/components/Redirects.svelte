@@ -5,13 +5,14 @@
   import RedirectRow from '../components/RedirectRow.svelte'
   import Await from '../components/Await.svelte'
 
-  let promise = getRedirects()
+  let promise = getRedirects();
   
   async function getRedirects() {
     try {
       await tick()
-      const response = await api.readRedirects($user.id)
-      redirects.init(response.redirects)
+      const response = await api.readRedirects($user.id);
+      console.log(response)
+      redirects.init(response.data.redirects);
     } catch (error) {
       console.log(error)
     }

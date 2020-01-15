@@ -17,8 +17,10 @@
       }
       notifications.add(response.message, 'is-success')
       invitation.toggle()
+      email = ''
     } catch (error) {
-      console.log('Invitation response', error);
+      console.error('Invitation response', error);
+      notifications.add('Oops, something went wrong')
     }
   }
 </script>

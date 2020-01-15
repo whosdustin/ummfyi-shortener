@@ -82,7 +82,7 @@ async function buildRedirects() {
 
 		let routes = []
 
-		response.forEach(redirect => {
+		response.data.forEach(redirect => {
 			const { destination, code } = redirect.data
 			routes = [...routes, `/${code} ${destination} 302` ]
 		})

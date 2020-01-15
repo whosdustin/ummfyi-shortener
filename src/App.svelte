@@ -26,7 +26,7 @@
 			const path = window.location.pathname
 			if (path !== '/') {
 				const response = await api.find(path.replace('/', ''))
-				document.location.href = response.destination
+				document.location.href = response.data.destination
 			}
 		} catch (error) {
 			console.log(error)
