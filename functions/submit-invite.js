@@ -1,4 +1,5 @@
 const faunadb = require('faunadb')
+const body = require('./utils/callbackBody')
 
 const q = faunadb.query
 const client = new faunadb.Client({
@@ -7,31 +8,54 @@ const client = new faunadb.Client({
 
 exports.handler = async (event, context) => {
   try {
-    let data = JSON.parse(event.body)
-    console.log('Function submit-invite invoked', data)
+    let invite = JSON.parse(event.body)
+    let invited = {email: null, invited: false};
+    console.log('Function submit-invite invoked', invite)
 
-    const emailInvite = {
-      data: data
+    const queryInvite = await client.query(
+      q.Map(
+        q.Paginate(
+          q.Match(q.Index('invite_by_email'), invite.email)
+        ),
+        q.Lambda(
+          'invite',
+          q.Get(q.Var('invite'))
+        )
+      )
+    )
+
+    // If query returns with data
+    if (queryInvite.data.length) {
+      invited = queryInvite.data[0].data
+    }
+
+    if (invited.invited) {
+      return {
+        statusCode: 200,
+        body: body('WAIT, Email has already been invited.', null, null, false)
+      }
+    }
+
+    if (invited.email === invite.email) {
+      return {
+        statusCode: 200,
+        body: body('SORRY, Email has already requested for an invite.', null, null, false)
+      }
     }
 
     await client.query(
-      q.Create(q.Collection('invites'), emailInvite)
+      q.Create(q.Collection('invites'), { data: invite })
     )
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ 
-        ok: true,
-        msg: `Invite submitted ${data.email}`
-      })
+      body: body(`Invite requested for ${invite.email}`)
     }
   } catch (error) {
+    console.log('Function `submit-invite` error', error)
     return {
       statusCode: 500,
-      body: JSON.stringify({ 
-        ok: false,
-        error: error
-      })
+      body: body('', null, error, false)
     }
   }
 }

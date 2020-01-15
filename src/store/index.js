@@ -3,6 +3,7 @@ import Notify from '../models/Notify'
 
 export const user = writable()
 export const openInvite = writable(false)
+export const invitation = initInvitation()
 export const redirects = initRedirects()
 export const notifications = initNotifications()
 
@@ -12,9 +13,18 @@ function initRedirects() {
   return {
     subscribe,
     init: redirects => set(redirects),
-    add:  redirect => {
+    add: redirect => {
       update(r => [...r, redirect])
     }
+  }
+}
+
+function initInvitation() {
+  const { subscribe, update } = writable(false)
+
+  return {
+    subscribe,
+    toggle: () => update(open => open = !open)
   }
 }
 

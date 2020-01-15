@@ -1,29 +1,31 @@
 <script>
   import { slide, fade } from 'svelte/transition'
-  import { writable } from 'svelte/store'
-  import { openInvite } from '../store'
+  import { invitation, notifications } from '../store'
   import api from '../utils/api'
   import Button from '../components/Button.svelte'
+  import Invite from '../models/Invite'
 
   let email;
-  
-  const toggleOpen = () => openInvite.update(open => open = !open);
 
   async function onSubmit() {
     try {
-      const response = await api.invite({ email: email });
-
-      if (response.ok) {
-        toggleOpen()
+      const response = await api.invite(new Invite(email));
+      
+      if (!response.ok && response.message) {
+        notifications.add(response.message)
+        return;
       }
+      notifications.add(response.message, 'is-success')
+      invitation.toggle()
     } catch (error) {
-      console.log(error);
+      console.log('Invitation response', error);
     }
   }
 </script>
-{#if $openInvite}
-<div class="modal" class:is-active={$openInvite} transition:fade>
-  <div on:click={toggleOpen} class="modal-background"></div>
+
+{#if $invitation}
+<div class="modal" class:is-active={$invitation} transition:fade>
+  <div on:click={invitation.toggle} class="modal-background"></div>
   
   <div class="modal-card" in:slide={{ duration: 500 }} out:fade>
     <section class="modal-card-body">
@@ -44,7 +46,7 @@
   </div>
   
   <button 
-    on:click={toggleOpen}
+    on:click={invitation.toggle}
     class="modal-close is-large"
     aria-label="close">
   </button>
