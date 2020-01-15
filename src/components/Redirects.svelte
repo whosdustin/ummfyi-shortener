@@ -11,7 +11,6 @@
     try {
       await tick()
       const response = await api.readRedirects($user.id)
-
       redirects.init(response.redirects)
     } catch (error) {
       console.log(error)

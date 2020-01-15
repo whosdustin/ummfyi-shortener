@@ -11,6 +11,7 @@
   <td>
     <a href={url}>{url}</a>
     <button 
+      title="Copy"
       on:click={() => copy(url)} 
       class="button is-small is-pulled-right">
       <span class="icon">

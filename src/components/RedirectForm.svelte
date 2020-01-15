@@ -28,22 +28,13 @@
 
 <div class="columns">
   <div class="column is-8 is-offset-2">
-    <div class="card">
-      <div class="card-content">
-        <div class="content">
-          <h1 class="title">URL Shortener</h1>
-          <form>
-            <div class="field">
-              <label class="label" for="destination">URL</label>
-              <input class="input is-large" type="text" bind:value={destination} placeholder="example.com" />
-            </div>
-            <div class="field">
-              <div class="control has-text-centered">
-                <Button size="large" on:click={onSubmit}>Shorten URL</Button>
-              </div>
-            </div>
-          </form>
-        </div>
+    <h1 class="title">Add URL</h1>
+    <div class="columns">
+      <div class="column">
+        <input class="input is-large is-rounded" type="text" bind:value={destination} placeholder="example.com" />
+      </div>
+      <div class="column is-narrow">
+        <Button size="large" on:click={onSubmit}>Shrink</Button>
       </div>
     </div>
   </div>
