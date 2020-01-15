@@ -1,5 +1,7 @@
 <script>
-  export let type = '';
+  export let type = 'text';
+  export let title;
+  export let content;
   let list = Array.from('iiiii');
 </script>
 
@@ -10,6 +12,19 @@
       <td><div class="block"></div></td>
     </tr>
   {/each}
+{/if}
+
+{#if type === 'text'}
+  <div class="message is-info">
+    {#if title}
+      <div class="message-header">
+        {title}
+      </div>
+    {/if}
+    <div class="message-body">
+      {@html content}
+    </div>
+  </div>
 {/if}
 
 <style>
