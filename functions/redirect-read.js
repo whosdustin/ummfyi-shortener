@@ -23,8 +23,7 @@ exports.handler = async (event, context) => {
     )
 
     const redirectRefs = response.data
-    console.log('Redirect refs', redirectRefs)
-    console.log(`${redirectRefs.length} redirect(s) found`)
+    console.log(`${redirectRefs.length} Redirect(s) found`)
 
     return {
       statusCode: 200,

@@ -6,6 +6,7 @@
 	import api from './utils/api'
 	import { routes } from './routes'
 	import Nav from './components/Nav.svelte'
+	import Notifications from './components/Notifications.svelte'
 	
 	onMount(() => {
 		netlifyIdentity.init()
@@ -37,3 +38,4 @@
 
 <Nav />
 <Router {routes} on:conditionsFailed={() => push('/')} />
+<Notifications />

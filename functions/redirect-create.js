@@ -37,7 +37,7 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ url: redirect })
+      body: JSON.stringify({ data: data })
     }
   } catch (error) {
     console.log('error', error)
