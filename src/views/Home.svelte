@@ -6,15 +6,21 @@
 </script>
 
 <Layout>
-  <section class="hero is-fullheight-with-navbar is-primary">
+  <section class="hero is-fullheight">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <h1 class="title is-size-1">A Conceited URL Shortener</h1>
-        <h2 class="subtitle">Built to inform people what you already know.</h2>
-        <Button color="success" on:click={invitation.toggle}>Request Invite</Button>
+        <h1 class="title is-size-1">A Condescending<br/> URL Shortener</h1>
+        <h2 class="subtitle">Simply tell people what you already know.</h2>
+        <Button size="large" on:click={invitation.toggle}>Request Invite</Button>
       </div>
     </div>
   </section>
 </Layout>
 
 <Invite />
+
+<style>
+.hero {
+  margin-top: calc(var(--navbar-height) / -1);
+}
+</style>

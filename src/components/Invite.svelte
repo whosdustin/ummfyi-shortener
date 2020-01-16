@@ -29,19 +29,19 @@
 <div class="modal" class:is-active={$invitation} transition:fade>
   <div on:click={invitation.toggle} class="modal-background"></div>
   
-  <div class="modal-card" in:slide={{ duration: 500 }} out:fade>
+  <div class="modal-card" transition:fade>
     <section class="modal-card-body">
       <div class="field has-text-centered">
-        <h2 class="is-size-2">Request an invite.</h2>
-        <p>Toss your email and in the form and wait patiently.</p>
+        <h2 class="title">REQUEST AN INVITE.</h2>
+        <p class="subtitle">Toss your email in the form and wait patiently.</p>
       </div>
       <form>
         <div class="field">
-          <label for="email" class="label">Email</label>
-          <input type="email" placeholder="joandoe@example.com" class="input" bind:value={email}>
+          <label for="email" class="label is-sr-only">Email</label>
+          <input type="email" placeholder="joandoe@example.com" class="input is-rounded is-medium" bind:value={email}>
         </div>
-        <div class="has-text-centered">
-          <Button on:click={onSubmit}>Send Request</Button>
+        <div class="field has-text-centered">
+          <Button size="medium" on:click={onSubmit}>Send Request</Button>
         </div>
       </form>
     </section>
@@ -54,3 +54,12 @@
   </button>
 </div>
 {/if}
+
+<style>
+.modal-card-body {
+  border-radius: 0.5em;
+}
+form {
+  padding: 1rem;
+}
+</style>

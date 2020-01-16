@@ -38,21 +38,34 @@
 	--weight-semibold: 600;
 	--weight-bold: 700;
 
-	--primary: hsla(10, 50%, 54%);
-
 	--info: var(--cyan);
 	--success: var(--green);
 	--warning: var(--yellow);
 	--danger: var(--red);
+
+	--primary: hsl(225, 57%, 47%);
+	--secondary: hsl(233, 48%, 66%);
+	--tertiary: hsl(10, 50%, 54%);
+	--brand-background: hsl(240, 73%, 3%);
+	--brand-background-ter: hsl(243, 40%, 22%);
+
+	--navbar-height: 88px;
 }
 
 html,
-body {
+body,
+#app {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	background-color: var(--white-ter);
-	transition: background 0.2s linear;
+	color: var(--white-ter);
+	background-color: var(--brand-background);
+	background-image: linear-gradient(var(--brand-background-ter) 2px, transparent 2px),
+		linear-gradient(90deg, var(--brand-background-ter) 2px, transparent 2px),
+		linear-gradient(var(--brand-background-ter) 1px, transparent 1px),
+		linear-gradient(90deg, var(--brand-background-ter) 1px, transparent 1px);
+		background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+		background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px;
 }
 
 body,
@@ -63,8 +76,17 @@ textarea {
 	font-family: var(--primary-font);
 }
 
-.hero.is-primary {
-	background-color: var(--primary);
+.navbar {
+	background-color: var(--brand-background);
+}
+
+.navbar-item, .navbar-link {
+	color: var(--white-ter);
+}
+
+.title,
+.subtitle {
+	color: var(--white-ter);
 }
 
 .tabs li.is-active a {
@@ -83,14 +105,13 @@ textarea {
 	background-color: var(--primary);
 }
 
-.panel-block-fixed-top {
-	background-color: var(--white)
+.modal-card-body {
+	background-color: var(--brand-background-ter);
 }
 
 /* Checkbox */
-label::before,
-label::after {
-	border-color: var(--black-ter); 
+.label {
+	color: var(--white-ter); 
 }
 
 footer {

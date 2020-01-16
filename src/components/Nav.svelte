@@ -21,7 +21,7 @@
   });
 </script>
 
-<nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
+<nav class="navbar is-spaced is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="navbar-menu">
     <div class="navbar-end">
       <a class="navbar-item" href="/" use:link>Home</a>
@@ -30,7 +30,7 @@
         <div class="navbar-item">{$user.email}</div>
       {/if}
       <div class="navbar-item buttons">
-        <Button color="default" on:click={() => netlifyIdentity.open()}>{authButton}</Button>
+        <Button on:click={() => netlifyIdentity.open()}>{authButton}</Button>
       </div>
     </div>
   </div>
