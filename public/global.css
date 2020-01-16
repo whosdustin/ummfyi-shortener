@@ -45,7 +45,7 @@
 
 	--primary: hsl(225, 57%, 47%);
 	--secondary: hsl(233, 48%, 66%);
-	--tertiary: hsl(10, 50%, 54%);
+	--tertiary: hsl(9, 100%, 64%);
 	--brand-background: hsl(240, 73%, 3%);
 	--brand-background-ter: hsl(243, 40%, 22%);
 
@@ -74,6 +74,15 @@ input,
 select,
 textarea {
 	font-family: var(--primary-font);
+}
+
+a {
+	color: var(--tertiary);
+}
+
+a:hover {
+	color: var(--tertiary);
+	text-decoration: underline;
 }
 
 .navbar {

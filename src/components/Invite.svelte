@@ -1,5 +1,5 @@
 <script>
-  import { slide, fade } from 'svelte/transition'
+  import { fade, fly } from 'svelte/transition'
   import { invitation, notifications } from '../store'
   import api from '../utils/api'
   import Button from '../components/Button.svelte'
@@ -29,7 +29,7 @@
 <div class="modal" class:is-active={$invitation} transition:fade>
   <div on:click={invitation.toggle} class="modal-background"></div>
   
-  <div class="modal-card" transition:fade>
+  <div class="modal-card" transition:fly={{ y: -80, duration: 400 }}>
     <section class="modal-card-body">
       <div class="field has-text-centered">
         <h2 class="title">REQUEST AN INVITE.</h2>
