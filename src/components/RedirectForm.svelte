@@ -73,7 +73,7 @@
       </div>
       <div class="column is-narrow">
         <Button disabled={loading} size="large" on:click={onSubmit}>
-          Shrink
+          <span>Shrink</span>
         </Button>
       </div>
     </div>
