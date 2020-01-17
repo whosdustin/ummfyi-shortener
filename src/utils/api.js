@@ -14,6 +14,18 @@ const create = async (data) => {
   }
 }
 
+const remove = async (code) => {
+  try {
+    const response = await fetch(`${netlify}redirect-remove`, {
+      method: 'POST',
+      body: JSON.stringify({ code: code })
+    })
+    return response.json()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const readRedirects = async (userid) => {
   try {
     const response = await fetch(`${netlify}redirect-read`, {
@@ -65,5 +77,6 @@ export default {
   find: find,
   readAll: readAll,
   readRedirects: readRedirects,
+  remove: remove,
   invite: invite
 }

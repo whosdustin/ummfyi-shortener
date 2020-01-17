@@ -14,7 +14,10 @@ function initRedirects() {
     subscribe,
     init: redirects => set(redirects),
     add: redirect => {
-      update(r => [...r, redirect])
+      update(redirects => [...redirects, redirect])
+    },
+    remove: redirect => {
+      update(rs => rs = rs.filter(r => r.data.code !== redirect.code))
     }
   }
 }

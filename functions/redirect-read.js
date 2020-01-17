@@ -8,6 +8,7 @@ const client = new faunadb.Client({
 
 exports.handler = async (event, context) => {
   try {
+    let redirects
     const data = JSON.parse(event.body)
     console.log('Function `redirect-read` invoked')
     
@@ -23,12 +24,12 @@ exports.handler = async (event, context) => {
       )
     )
 
-    const redirects = response.data
+    redirects = response.data
     console.log(`${redirects.length} Redirect(s) found`)
 
     return {
       statusCode: 200,
-      body: body('', { redirects: redirects })
+      body: body('', redirects)
     }
   } catch (error) {
     console.log(error)
