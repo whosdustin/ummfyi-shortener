@@ -7,6 +7,9 @@
   import Button from './Button.svelte'
 
   let authButton = auth.currentUser() ? 'Log out' : 'Log in'
+  let navIsOpen = false;
+
+  const toggleNav = () => navIsOpen = !navIsOpen
 
   netlifyIdentity.on('login', u => {
     user.set(u)
@@ -21,8 +24,24 @@
   });
 </script>
 
-<nav class="navbar is-spaced is-fixed-top" role="navigation" aria-label="main navigation">
-  <div class="navbar-menu">
+<nav 
+  class="navbar is-spaced is-fixed-top" 
+  role="navigation" 
+  aria-label="main navigation">
+  <div class="navbar-brand">
+    <a 
+      on:click={toggleNav}
+      href="javascript:;"
+      role="button"
+      class="navbar-burger burger" 
+      aria-label="menu" 
+      aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu" class:is-active={navIsOpen}>
     <div class="navbar-end">
       <a class="navbar-item" href="/" use:link>Home</a>
       <a class="navbar-item" href="/shortener" use:link>Shortener</a>
