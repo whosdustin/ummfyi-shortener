@@ -35,7 +35,7 @@ exports.handler = async (event, context) => {
     console.log(error)
     return {
       statusCode: 400,
-      body: JSON.stringify({ ok: false, error: error })
+      body: body('', null, error)
     }
   }
 }

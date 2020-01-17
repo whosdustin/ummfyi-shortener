@@ -8,32 +8,25 @@ const client = new faunadb.Client({
 
 exports.handler = async (event, context) => {
   try {
-    const body = JSON.parse(event.body)
+    let redirect
+    const data = JSON.parse(event.body)
     console.log('Function `redirect-find` invoked')
-    console.log(body.code)
+    console.log('Find Code', data.code)
 
     const response = await client.query(
-      q.Map(
-        q.Paginate(
-          q.Match(q.Index('redirect_by_code'), body.code)
-        ),
-        q.Lambda(
-          'redirect',
-          q.Get(q.Var('redirect'))
-        )
-      )
+      q.Select('data', q.Get(q.Match(q.Index('redirect_by_code'), data.code)))
     )
     
-    console.log('Found', response.data[0])
-    const redirect = response.data[0].data
+    console.log('Found', response)
+    redirect = response
 
     return {
       statusCode: 200,
-      body: body('', {...redirect})
+      body: body('Found', redirect)
     }
 
   } catch (error) { 
-    console.log('Found 0 Refs')
+    console.log('Found 0 Refs', error)
     return {
       statusCode: 400,
       body: body('', null, error, false)

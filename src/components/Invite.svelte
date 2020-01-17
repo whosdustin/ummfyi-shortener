@@ -17,7 +17,7 @@
 
   async function onSubmit() {
     try {
-      if (!isValid) { return }
+      if (!isValid) { return; }
       const response = await api.invite(new Invite(email));
       
       if (!response.ok && response.message) {
@@ -26,7 +26,7 @@
       }
       notifications.add(response.message, 'is-success')
       invitation.toggle()
-      email = ''
+      email.set('')
     } catch (error) {
       console.error('Invitation response', error);
       notifications.add('Oops, something went wrong')
