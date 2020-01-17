@@ -1,14 +1,23 @@
 <script>
+  import { onDestroy } from 'svelte'
   import { fade, fly } from 'svelte/transition'
+  import { writable } from 'svelte/store'
   import { invitation, notifications } from '../store'
+  import isEmail from 'validator/es/lib/isEmail'
   import api from '../utils/api'
   import Button from '../components/Button.svelte'
   import Invite from '../models/Invite'
 
-  let email;
+  let email = writable('');
+  let isValid = false;
+
+  const unsubscribe = email.subscribe(text => {
+    isValid = isEmail(text)
+  })
 
   async function onSubmit() {
     try {
+      if (!isValid) { return }
       const response = await api.invite(new Invite(email));
       
       if (!response.ok && response.message) {
@@ -23,6 +32,8 @@
       notifications.add('Oops, something went wrong')
     }
   }
+
+  onDestroy(() => unsubscribe())
 </script>
 
 {#if $invitation}
@@ -38,10 +49,24 @@
       <form>
         <div class="field">
           <label for="email" class="label is-sr-only">Email</label>
-          <input type="email" placeholder="joandoe@example.com" class="input is-rounded is-medium" bind:value={email}>
+          <div class="control has-icons-left has-icons-right">
+            <input 
+              type="email"
+              placeholder="joandoe@example.com"
+              class="input is-rounded is-medium"
+              bind:value={$email}>
+            <span class="icon is-left" class:has-text-primary={isValid}>
+              <i class="fas fa-envelope"></i>
+            </span>
+            {#if isValid}
+              <span class="icon is-right has-text-primary">
+                <i class="fas fa-check"></i>
+              </span>
+            {/if}
+          </div>
         </div>
         <div class="field has-text-centered">
-          <Button size="medium" on:click={onSubmit}>Send Request</Button>
+          <Button disabled={!isValid} size="medium" on:click={onSubmit}>Send Request</Button>
         </div>
       </form>
     </section>
