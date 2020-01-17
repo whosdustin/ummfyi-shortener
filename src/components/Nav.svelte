@@ -29,6 +29,9 @@
   role="navigation" 
   aria-label="main navigation">
   <div class="navbar-brand">
+    <a class="navbar-item is-size-4" href="/">
+      UMM.FYI
+    </a>
     <a 
       on:click={toggleNav}
       href="javascript:;"
