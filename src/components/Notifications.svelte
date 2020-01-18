@@ -26,7 +26,7 @@
   <div class="notifications">
     {#each $notifications as {message, state}}
       <div class={classList(state)} in:fly="{{ x: 300, duration: 400 }}" out:fade>
-        <p>{message}</p>
+        <p>{@html message}</p>
         <button class="delete" on:click={() => notifications.remove(message)} />
       </div>
     {/each}

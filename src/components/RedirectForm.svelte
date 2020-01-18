@@ -6,7 +6,8 @@
   import isURL from 'validator/es/lib/isURL'
   import Button from './Button.svelte'
 
-  let destination = writable('');
+  const destination = writable('');
+  const code = writable('')
   let loading = false
   let isValid = false
   let submitAttempt = false
@@ -22,19 +23,31 @@
         notifications.add('That doesn\'t look like a real URL. Try again.')
         return;
       }
+
       loading = true
+
       const redirect = {
         user: {
           id: $user.id,
           email: $user.email
         },
-        destination
+        destination: $destination,
+        code: $code
       }
+
       const response = await api.create(redirect)
+      
+      loading = false
+
+      if (!response.ok) {
+        notifications.add(response.message)
+        return
+      }
+
       redirects.add(response)
       notifications.add(response.message, 'is-success')
-      loading = false
       destination.set('')
+      code.set('')
     } catch (error) {
       console.error(error)
       notifications.add('Oops, something went wrong')
@@ -58,16 +71,17 @@
             <span class="icon is-right">
               <i class="fas fa-compact-disc fa-spin"></i>
             </span>
-          {/if}
-          {#if submitAttempt && !isValid}
-            <span class="icon is-right has-text-danger">
-              <i class="fas fa-exclamation-circle"></i>
-            </span>
-          {/if}
-          {#if isValid}
-            <span class="icon is-right has-text-primary">
-              <i class="fas fa-check"></i>
-            </span>
+          {:else}
+            {#if submitAttempt && !isValid}
+              <span class="icon is-right has-text-danger">
+                <i class="fas fa-exclamation-circle"></i>
+              </span>
+            {/if}
+            {#if isValid}
+              <span class="icon is-right has-text-primary">
+                <i class="fas fa-check"></i>
+              </span>
+            {/if}
           {/if}
         </div>
       </div>
@@ -75,6 +89,20 @@
         <Button disabled={loading} size="large" on:click={onSubmit}>
           <span>Shrink</span>
         </Button>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          umm.fyi/
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <input type="text" class="input is-rounded" bind:value={$code}>
+          </div>
+        </div>
+        </div>
       </div>
     </div>
   </div>
