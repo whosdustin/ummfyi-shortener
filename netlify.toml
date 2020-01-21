@@ -9,5 +9,5 @@
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/index.htm"
   status = 404
