@@ -14,7 +14,6 @@
             method: 'POST',
             body: JSON.stringify({ code: code })
           })
-          return response.json()
         }
       } catch (error) {
         document.location.pathname = `/?error=${error}`
