@@ -8,6 +8,7 @@
 	import Notifications from './components/Notifications.svelte'
 	
 	onMount(() => {
+		redirectIfRequired()
 		netlifyIdentity.init()
 		getUser()
 	});
@@ -26,13 +27,13 @@
 			console.log(path)
 			if (path !== '/') {
 				const response = await api.redirect(path.replace('/', ''))
+				console.log(response)
 				return response
 			}
 		} catch (error) {
 			document.location.pathname = `/?error=${error}`
 		}
 	}
-	redirectIfRequired()
 </script>
 
 <Router {routes} on:conditionsFailed={() => push('/')} />
