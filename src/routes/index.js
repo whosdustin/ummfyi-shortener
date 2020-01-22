@@ -6,6 +6,5 @@ import Shortener from '../views/Shortener.svelte'
 
 export const routes = {
   '/': Home,
-  '/shortener': wrap(Shortener, () => !!auth.currentUser()),
-  '*': Home
+  '/shortener': wrap(Shortener, () => !!auth.currentUser())
 }
