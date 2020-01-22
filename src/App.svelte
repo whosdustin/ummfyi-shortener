@@ -26,7 +26,7 @@
 			console.log(path)
 			if (path !== '/') {
 				const response = await api.redirect(path.replace('/', ''))
-				return response.json()
+				return response
 			}
 		} catch (error) {
 			document.location.pathname = `/?error=${error}`

@@ -52,11 +52,11 @@ const find = async (code) => {
 
 const redirect = async (code) => {
   try {
-    await fetch(`${netlify}redirect`, {
+    const response = await fetch(`${netlify}redirect`, {
       method: 'POST',
       body: JSON.stringify({ code: code })
     })
-    // return response.json()
+    return response.json()
   } catch (error) {
     console.log(error)
   }
