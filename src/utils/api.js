@@ -87,6 +87,7 @@ const invite = async (data) => {
 export default {
   create: create,
   find: find,
+  redirect: redirect,
   readAll: readAll,
   readRedirects: readRedirects,
   remove: remove,
