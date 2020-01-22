@@ -58,7 +58,7 @@ exports.handler = async (event, context) => {
     }
 
     if (redirect.destination.indexOf('://') == -1) {
-      redirect.destination = `http://${redirect.destination}`
+      redirect.destination = `https://${redirect.destination}`
     }
 
     shortURL = `${rootURL}${redirect.code}`
