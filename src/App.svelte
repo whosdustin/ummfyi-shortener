@@ -24,11 +24,9 @@
 	async function redirectIfRequired() {
 		try {
 			const path = window.location.pathname
-			console.log(path)
 			if (path !== '/') {
-				const response = await api.redirect(path.replace('/', ''))
-				console.log(response)
-				return response
+				const response = await api.find(path.replace('/', ''))
+				document.location.href = response.destination
 			}
 		} catch (error) {
 			document.location.pathname = `/?error=${error}`

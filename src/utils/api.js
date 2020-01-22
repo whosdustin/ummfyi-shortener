@@ -56,6 +56,7 @@ const redirect = async (code) => {
       method: 'POST',
       body: JSON.stringify({ code: code })
     })
+    console.log(response)
     return response.json()
   } catch (error) {
     console.log(error)
