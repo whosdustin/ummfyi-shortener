@@ -10,4 +10,4 @@
 [[redirects]]
   from = "/*"
   to = "/index.htm"
-  status = 302
+  status = 200
