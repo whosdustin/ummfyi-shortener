@@ -9,7 +9,7 @@ exports.handler = async(event, context) => {
   try {
     const data = JSON.parse(event.body)
     console.log('Function `redirect` invoked')
-    console.log('Redirect Code', data.code)
+    console.log('Redirect Code:', data.code)
 
     const query = await client.query(
       q.Select('data', q.Get(q.Match(q.Index('redirect_by_code'), data.code)))
