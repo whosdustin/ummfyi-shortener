@@ -25,12 +25,10 @@
 			const path = window.location.pathname
 			console.log(path)
 			if (path !== '/') {
-				const response = await api.find(path.replace('/', ''))
-				document.location.href = response.data.destination
+				const response = await api.redirect(path.replace('/', ''))
 			}
 		} catch (error) {
-			console.log(error)
-			document.location.pathname = '/'
+			document.location.pathname = `/?error=${error}`
 		}
 	}
 	redirectIfRequired()

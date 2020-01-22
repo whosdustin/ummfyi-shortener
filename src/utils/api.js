@@ -50,6 +50,18 @@ const find = async (code) => {
   }
 }
 
+const redirect = async (code) => {
+  try {
+    await fetch(`${netlify}redirect`, {
+      method: 'POST',
+      body: JSON.stringify({ code: code })
+    })
+    // return response.json()
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const readAll = async (production) => {
   try {
     // Need full URL for Rollup build
