@@ -1,4 +1,5 @@
 const faunadb = require('faunadb')
+const messagebird = require('messagebird')(process.env.MESSAGEBIRD_KEY)
 const body = require('./utils/callbackBody')
 
 const q = faunadb.query
@@ -46,6 +47,20 @@ exports.handler = async (event, context) => {
     await client.query(
       q.Create(q.Collection('invites'), { data: invite })
     )
+
+    const params = {
+      'originator': process.env.PHONE_KEY,
+      'recipients': [process.env.PHONE_KEY],
+      'body': `[Invite Request - umm.fyi]\nEmail: ${invite.email}`
+    };
+    
+    messagebird.messages.create(params, function (err, response) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log(response);
+    });
+    
 
     return {
       statusCode: 200,

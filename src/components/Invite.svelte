@@ -18,7 +18,7 @@
   async function onSubmit() {
     try {
       if (!isValid) { return; }
-      const response = await api.invite(new Invite(email));
+      const response = await api.invite(new Invite($email));
       
       if (!response.ok && response.message) {
         notifications.add(response.message)
