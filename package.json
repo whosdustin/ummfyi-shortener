@@ -26,6 +26,6 @@
     "node-fetch": "^2.6.1",
     "sirv-cli": "^0.4.4",
     "svelte-spa-router": "^2.0.0",
-    "validator": "^12.1.0"
+    "validator": "^13.7.0"
   }
 }
